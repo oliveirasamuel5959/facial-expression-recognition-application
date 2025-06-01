@@ -1,0 +1,11 @@
+[tool.poetry]
+name = "application-dep"
+version = "0.2.0"
+description = ""
+authors = ["Samuel Oliveira <patriciosamuel097@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+numpy = "^2.2.6"
+requests = "^2.32.3"
