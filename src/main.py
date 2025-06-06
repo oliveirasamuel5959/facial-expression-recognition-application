@@ -1,10 +1,12 @@
 import cv2
 
+from ml_classifier import MLModel
+
 # Open the default camera
 cam = cv2.VideoCapture(0)
 
 # Detect face object haarcascade
-detect_face = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+detect_face = cv2.CascadeClassifier('model/haarcascade_frontalface_default.xml')
 
 # Get the default frame width and height
 frame_width = int(cam.get(cv2.CAP_PROP_FRAME_WIDTH))
@@ -20,6 +22,13 @@ x1, y1 = 300, 400
 
 # Text formatting
 font = cv2.FONT_HERSHEY_SIMPLEX
+
+# model path
+model_path = 'model/model-26-0.7175.h5'
+
+# Machine Learning Model class
+model = MLModel()
+model.load_model(model_path)
 
 # Check if Camera was found
 if not cam.isOpened():
@@ -38,11 +47,20 @@ while True:
     # iterate over position and dimensions of the rectangle 
     # from cascade classifier
     for x, y, w, h in face:
+        # get frame position and dimensions
+        pos = [x, y]
+        dim = [w, h]
+        
+        # define text position coordinates
         text_pos_x = x + (w // 3)
         text_pos_y = y + h + 20
+        
+        # return rectangle from face
+        # put text emotion on image
         ret = cv2.rectangle(frame, (x, y), (x + w, y + h), color=(0, 255, 0), thickness=2)
         cv2.putText(frame,'happy',(text_pos_x, text_pos_y), fontFace=font, fontScale=1, color=(0, 255, 0), thickness=2, lineType=cv2.LINE_AA)
 
+        
         # Write the frame to the output file
         out.write(frame)
         
