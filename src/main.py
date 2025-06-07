@@ -1,6 +1,10 @@
 import cv2
+import numpy as np
 
 from ml_classifier import MLModel
+from utils import crop_face
+from utils import image_preprocessing
+from utils import save_image
 
 # Open the default camera
 cam = cv2.VideoCapture(0)
@@ -27,8 +31,8 @@ font = cv2.FONT_HERSHEY_SIMPLEX
 model_path = 'model/model-26-0.7175.h5'
 
 # Machine Learning Model class
-model = MLModel()
-model.load_model(model_path)
+ml = MLModel()
+model = ml.load(model_path)
 
 # Check if Camera was found
 if not cam.isOpened():
@@ -41,8 +45,8 @@ while True:
     ret, frame = cam.read()
 
     # detect face from frame
-    gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    face = detect_face.detectMultiScale(gray_frame, 1.2, 3)
+    rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    face = detect_face.detectMultiScale(rgb_frame, 1.2, 3)
     
     # iterate over position and dimensions of the rectangle 
     # from cascade classifier
@@ -52,14 +56,21 @@ while True:
         dim = [w, h]
         
         # define text position coordinates
-        text_pos_x = x + (w // 3)
+        text_pos_x = x
         text_pos_y = y + h + 20
+        
+        face_image_crop = crop_face(frame=frame, pos=pos, dim=dim)
+        image_array = image_preprocessing(face_image_crop)
+
+        class_name, confidence = ml.predictions(image_array, model)
         
         # return rectangle from face
         # put text emotion on image
         ret = cv2.rectangle(frame, (x, y), (x + w, y + h), color=(0, 255, 0), thickness=2)
-        cv2.putText(frame,'happy',(text_pos_x, text_pos_y), fontFace=font, fontScale=1, color=(0, 255, 0), thickness=2, lineType=cv2.LINE_AA)
-
+        cv2.putText(frame, f'{class_name}', (text_pos_x, text_pos_y), fontFace=font, fontScale=1, color=(0, 255, 0), thickness=2, lineType=cv2.LINE_AA)
+        cv2.putText(frame, f'{confidence}%', (text_pos_x, text_pos_y + 30), fontFace=font, fontScale=1, color=(0, 255, 0), thickness=2, lineType=cv2.LINE_AA)
+        
+        save_image(image=face_image_crop)
         
         # Write the frame to the output file
         out.write(frame)
