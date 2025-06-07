@@ -14,13 +14,22 @@ class MLModel:
     def load(self, path):
         self.model = tf.keras.models.load_model(path)
         logging.info('Model Load successfuly!')
+        
         return self.model
     
-    def predictions(self, image_array, model):
+    def make_predictions(self, image_array, model):
+        '''
+        model weitghts is stored on model variable
+        image must be in the format: (1, 224, 224, 3)
+        class names must be in the same order that was trained
+        
+        return class name predicted and accuracy
+        '''
         predictions = model.predict(image_array)[0]
         predicted_index = np.argmax(predictions)
         predicted_class = CLASS_NAMES[predicted_index]
         confidence = float(predictions[predicted_index])
         confidence = round(confidence, 2) * 100
+        
         return [predicted_class, confidence]
     

@@ -62,7 +62,7 @@ while True:
         face_image_crop = crop_face(frame=frame, pos=pos, dim=dim)
         image_array = image_preprocessing(face_image_crop)
 
-        class_name, confidence = ml.predictions(image_array, model)
+        class_name, confidence = ml.make_predictions(image_array, model)
         
         # return rectangle from face
         # put text emotion on image
