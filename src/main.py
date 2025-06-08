@@ -1,5 +1,5 @@
 import cv2
-import numpy as np
+import time
 
 from ml_classifier import MLModel
 from utils import crop_face
@@ -62,10 +62,12 @@ while True:
         face_image_crop = crop_face(frame=frame, pos=pos, dim=dim)
         image_array = image_preprocessing(face_image_crop)
 
+        start_time = time.time()
         class_name, confidence = ml.make_predictions(image_array, model)
+        end_time = time.time()
+        print(f"Time taken for prediction: {round(end_time - start_time, 2)}s")
         
         # return rectangle from face
-        # put text emotion on image
         ret = cv2.rectangle(frame, (x, y), (x + w, y + h), color=(0, 255, 0), thickness=2)
         cv2.putText(frame, f'{class_name}', (text_pos_x, text_pos_y), fontFace=font, fontScale=1, color=(0, 255, 0), thickness=2, lineType=cv2.LINE_AA)
         cv2.putText(frame, f'{confidence}%', (text_pos_x, text_pos_y + 30), fontFace=font, fontScale=1, color=(0, 255, 0), thickness=2, lineType=cv2.LINE_AA)
