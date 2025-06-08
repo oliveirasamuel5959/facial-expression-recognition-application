@@ -12,6 +12,9 @@ class MLModel:
         super().__init__()
     
     def load(self, path):
+        '''
+        Load keras model weights in .h5 format
+        '''
         self.model = tf.keras.models.load_model(path)
         logging.info('Model Load successfuly!')
         
