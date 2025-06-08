@@ -28,11 +28,13 @@ class MLModel:
         
         return class name prediction and accuracy
         '''
+        logging.info("Start Prediction...")
         predictions = model.predict(image_array)[0]
         predicted_index = np.argmax(predictions)
         predicted_class = CLASS_NAMES[predicted_index]
         confidence = float(predictions[predicted_index])
         confidence = round(confidence, 2) * 100
         
+        logging.info("Return Prediction!")
         return [predicted_class, confidence]
     
