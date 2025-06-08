@@ -22,11 +22,11 @@ class MLModel:
     
     def make_predictions(self, image_array, model):
         '''
-        model weitghts is stored on model variable
+        model load and stored in model variable
         image must be in the format: (1, 224, 224, 3)
         class names must be in the same order that was trained
         
-        return class name predicted and accuracy
+        return class name prediction and accuracy
         '''
         predictions = model.predict(image_array)[0]
         predicted_index = np.argmax(predictions)
