@@ -23,13 +23,14 @@ Before you start, make sure you have the following installed:
 ## **Installation**
 
 Instruction on how to install and set up the project:
+
 1. Clone the repository: **`git clone`**
 2. Navigate to the project directory: **`cd fer_expression`**
 3. Create a virtual envirornment: **`Python -m venv .venv`**
 4. Activate the virtual envirornment: **`Source .venv/bin/activate`**
 5. Install the requirements packages: **`pip install -r requirements.txt`**
 
-## Project Structure
+## **Project Structure**
 ------------
     ├── src                          <- Main entry of the project
     │   ├── main.py                  <- Main application code
@@ -41,4 +42,12 @@ Instruction on how to install and set up the project:
     ├── requirements.txt   <- The requirements file for reproducing the analysis environment
     │
 
+## **Usage**
+
+To use Project, follow these steps:
+
+1. Open the project in your favorite code editor.
+2. Modify the source code to fit your needs.
+3. Run the project: **`Python src/main.py`**
+5. Use the project as desired.
 --------
