@@ -7,8 +7,8 @@
 ## **Table of Contents**
 
 - [Requirements](#requirements)
-- [Installation](#installation)
 - [Project Structure](#project-structure)
+- [Installation](#installation)
 - [Usage](#usage)
 - [License](#license)
 
