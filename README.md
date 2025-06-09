@@ -1,5 +1,16 @@
-# Contents
-# 1. install docker
-# 2. create docker image
-# 3. build docker to create a container
-# 3. docker run
+# Python Application in Docker
+
+This project demonstrates how to containerize a Python application using Docker. It installs all dependencies listed in `requirements.txt` and runs the app inside a Docker container.
+
+---
+
+## 🐍 Requirements
+
+Before you start, make sure you have the following installed:
+
+- [Docker](https://www.docker.com/get-started)
+
+---
+
+## 📁 Project Structure
+
