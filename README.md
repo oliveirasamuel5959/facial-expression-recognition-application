@@ -9,6 +9,7 @@ The core of the application is a deep learning model developed using Python with
 - Surprise
 - Angry
 - Neutral
+
 The application connect to a camera using opencv library to capture live video streams, detects faces in real time, and performs emotion classification on the detected facial regions. This tool aims to support healthcare providers in delivering more empathetic and personalized care by offering additional insights into a patient's emotional well-being.
 
 ## **Table of Contents**
