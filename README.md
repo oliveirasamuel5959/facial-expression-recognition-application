@@ -22,7 +22,7 @@ Before you start, make sure you have the following installed:
 
 Instruction on how to install and set up the project.
 
-## Project Instruction
+## Project Structure
 ------------
     ├── src                          <- Main entry of the project
     │   ├── main.py                  <- Main application code
