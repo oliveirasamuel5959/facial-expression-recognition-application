@@ -6,6 +6,7 @@
 ## Table of Contents
 
 - [Requirements](#requirements)
+- [Installation](#installation)
 - [Project Structure](#project-structure)
 - [Usage](#usage)
 - [License](#license)
