@@ -1,8 +1,15 @@
 # **Computer Vision: Facial emotion recognition application**
 
 ## **Introduction**
-- The application will load the pre-trained model stored in a .h5 file in the project root directory and make predictions on video stream camera using opencv library
-- The results will show on the screen and will be one of the 5 classes: (Happy, Sad, Surprise, Angry, Neutral).
+This AI-powered application is designed to assist healthcare professionals in monitoring and understanding the emotional states of patients who experience communication challenges, such as intellectual disabilities, hearing impairments, or other conditions that hinder verbal expression.
+
+The core of the application is a deep learning model developed using Python with TensorFlow and Keras. The model is trained to classify human facial expressions into five distinct emotional categories:
+- Happy
+- Sad
+- Surprise
+- Angry
+- Neutral
+The application connect to a camera using opencv library to capture live video streams, detects faces in real time, and performs emotion classification on the detected facial regions. This tool aims to support healthcare providers in delivering more empathetic and personalized care by offering additional insights into a patient's emotional well-being.
 
 ## **Table of Contents**
 
