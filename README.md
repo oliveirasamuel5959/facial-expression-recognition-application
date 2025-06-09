@@ -20,16 +20,6 @@ Before you start, make sure you have the following installed:
 - [Python 3.10](https://www.python.org/downloads/)
 - [Docker](https://www.docker.com/get-started)
 
-## **Installation**
-
-Instruction on how to install and set up the project:
-
-1. Clone the repository: **`git clone`**
-2. Navigate to the project directory: **`cd fer_expression`**
-3. Create a virtual envirornment: **`Python -m venv .venv`**
-4. Activate the virtual envirornment: **`Source .venv/bin/activate`**
-5. Install the requirements packages: **`pip install -r requirements.txt`**
-
 ## **Project Structure**
 ------------
     ├── src                          <- Main entry of the project
@@ -41,6 +31,16 @@ Instruction on how to install and set up the project:
     │   ├── model-21-0.7172     <- model weights
     ├── requirements.txt   <- The requirements file for reproducing the analysis environment
     │
+
+## **Installation**
+
+Instruction on how to install and set up the project:
+
+1. Clone the repository: **`git clone`**
+2. Navigate to the project directory: **`cd fer_expression`**
+3. Create a virtual envirornment: **`Python -m venv .venv`**
+4. Activate the virtual envirornment: **`Source .venv/bin/activate`**
+5. Install the requirements packages: **`pip install -r requirements.txt`**
 
 ## **Usage**
 
