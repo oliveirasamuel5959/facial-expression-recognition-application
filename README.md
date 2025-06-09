@@ -1,6 +1,7 @@
-# Python Application in Docker
+# Facial emotion recognition application
 
-This project demonstrates how to containerize a Python application using Docker. It installs all dependencies listed in `requirements.txt` and runs the app inside a Docker container.
+Video stream facial recognition application using camera and opencv library.
+The model was trained using CNN for feature extraction and Deep Learning for classification
 
 ---
 
@@ -13,4 +14,6 @@ Before you start, make sure you have the following installed:
 ---
 
 ## 📁 Project Structure
+## fer_expression
+
 
