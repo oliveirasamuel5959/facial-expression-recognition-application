@@ -3,9 +3,14 @@
 Video stream facial recognition application using camera and opencv library.
 The model was trained using CNN for feature extraction and Deep Learning for classification
 
----
+## Table of Contents
 
-## 🐍 Requirements
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Usage](#usage)
+- [License](#license)
+
+## Requirements
 
 Before you start, make sure you have the following installed:
 
@@ -13,9 +18,6 @@ Before you start, make sure you have the following installed:
 - [Python 3.10](https://www.python.org/downloads/)
 - [Docker](https://www.docker.com/get-started)
 
----
+## Installation
 
-## 📁 Project Structure
-## fer_expression
-
-
+Instruction on how to install and set up the project.
