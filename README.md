@@ -9,6 +9,7 @@ The model was trained using CNN for feature extraction and Deep Learning for cla
 
 Before you start, make sure you have the following installed:
 
+- [VS Code](https://code.visualstudio.com/download)
 - [Docker](https://www.docker.com/get-started)
 - [Python 3.10](https://www.python.org/downloads/)
 
