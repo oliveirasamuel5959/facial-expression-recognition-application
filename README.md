@@ -1,8 +1,6 @@
 # Computer Vision: Facial emotion recognition application
 
-## Video stream facial recognition application using camera and opencv library.
-
-- The application will load the pre-trained model stored in a .h5 file in the project root directory and make predictions on video sream camera using opencv library
+- The application will load the pre-trained model stored in a .h5 file in the project root directory and make predictions on video stream camera using opencv library
 - The results will show on the screen and will be one of the 5 classes: (Happy, Sad, Surprise, Angry, Neutral).
 
 ## Table of Contents
