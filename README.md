@@ -23,7 +23,7 @@ The application connect to a camera using opencv library to capture live video s
 
 Before you start, make sure you have the following installed:
 
-- [VS Code](https://code.visualstudio.com/download)
+- [VS Code](https://code.visualstudio.com/download) (Your prefered code editor)
 - [Python 3.10](https://www.python.org/downloads/)
 - [Docker](https://www.docker.com/get-started)
 
