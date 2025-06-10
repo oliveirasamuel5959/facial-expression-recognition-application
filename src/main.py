@@ -7,6 +7,7 @@ from utils import image_preprocessing
 from utils import save_image
 
 # Open the default camera
+
 cam = cv2.VideoCapture(0)
 
 # Detect face object haarcascade
@@ -38,6 +39,7 @@ emd = EmotionDetection(class_names=CLASS_NAMES)
 model = emd.load(model_path)
 
 # Check if Camera was found
+
 if not cam.isOpened():
     print("Error: Could not open video source.")
     exit()
