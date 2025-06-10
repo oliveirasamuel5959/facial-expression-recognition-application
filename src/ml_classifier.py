@@ -5,11 +5,9 @@ import logging
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-CLASS_NAMES = ['angry', 'fear', 'happy', 'neutral', 'sad']  # Update based on your use case
-
-class MLModel:
-    def __init__(self):
-        super().__init__()
+class EmotionDetection:
+    def __init__(self, class_names):
+        self.class_names = class_names
     
     def load(self, path):
         '''
@@ -17,7 +15,6 @@ class MLModel:
         '''
         self.model = tf.keras.models.load_model(path)
         logging.info('Model Load successfuly!')
-        
         return self.model
     
     def make_predictions(self, image_array, model):
@@ -31,10 +28,9 @@ class MLModel:
         logging.info("Start Prediction...")
         predictions = model.predict(image_array)[0]
         predicted_index = np.argmax(predictions)
-        predicted_class = CLASS_NAMES[predicted_index]
+        predicted_class = self.class_names[predicted_index]
         confidence = float(predictions[predicted_index])
         confidence = round(confidence, 2) * 100
-        
         logging.info("Return Prediction!")
         return [predicted_class, confidence]
     

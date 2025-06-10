@@ -1,7 +1,7 @@
 import cv2
 import time
 
-from ml_classifier import MLModel
+from ml_classifier import EmotionDetection
 from utils import crop_face
 from utils import image_preprocessing
 from utils import save_image
@@ -31,8 +31,11 @@ font = cv2.FONT_HERSHEY_SIMPLEX
 model_path = 'model/model-26-0.7175.h5'
 
 # Machine Learning Model class
-ml = MLModel()
-model = ml.load(model_path)
+CLASS_NAMES = ['angry', 'fear', 'happy', 'neutral', 'sad'] 
+
+emd = EmotionDetection(class_names=CLASS_NAMES)
+
+model = emd.load(model_path)
 
 # Check if Camera was found
 if not cam.isOpened():
@@ -63,7 +66,7 @@ while True:
         image_array = image_preprocessing(face_image_crop)
 
         start_time = time.time()
-        class_name, confidence = ml.make_predictions(image_array, model)
+        class_name, confidence = emd.make_predictions(image_array, model)
         end_time = time.time()
         print(f"Time taken for prediction: {round(end_time - start_time, 2)}s")
         
