@@ -8,7 +8,7 @@ from utils import save_image
 
 # Open the default camera
 
-cam = cv2.VideoCapture(0)
+cam = cv2.VideoCapture(0    )
 
 # Detect face object haarcascade
 detect_face = cv2.CascadeClassifier('model/haarcascade_frontalface_default.xml')
