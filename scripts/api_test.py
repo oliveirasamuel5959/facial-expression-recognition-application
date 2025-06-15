@@ -6,10 +6,9 @@ import requests
 from PIL import Image
 from io import BytesIO
 
-image_path = "images/me.jpg"
+image_path = "images/test.jpg"
 
-
-URL = "http://192.168.0.16:5000/v1/predictions"
+URL = "http://192.168.0.16:8080/v1/predictions"
 headers = {'Content-type': 'application/json'}
 
 def image64_encode(filename):
@@ -34,7 +33,7 @@ def image64_encode(filename):
                 json.dump(data, f)
         
     except FileNotFoundError:
-        raise FileNotFoundError
+        print(f"File not found {filename}")
     
     
 def image64_decode(jsonfile):
@@ -52,7 +51,6 @@ def send_image_post(jsonfile):
     r = requests.post(url=URL, data=json.dumps(image_data), headers=headers)
     print(r.status_code)
 
-base64_image_data = image64_encode(filename=image_path)
+image64_encode(filename=image_path)
 image64_decode("scripts/embedded.json")
-
 send_image_post('scripts/embedded.json')
