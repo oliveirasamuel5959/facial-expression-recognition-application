@@ -9,7 +9,7 @@ from io import BytesIO
 image_path = "images/me.jpg"
 
 
-URL = "http://192.168.0.16:5000/predict"
+URL = "http://192.168.0.16:5000/v1/predictions"
 headers = {'Content-type': 'application/json'}
 
 def image64_encode(filename):
