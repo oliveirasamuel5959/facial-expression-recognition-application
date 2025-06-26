@@ -1,14 +1,16 @@
 import cv2
 import time
+import requests
 
 from ml_classifier import EmotionDetection
 from utils import crop_face
 from utils import image_preprocessing
 from utils import save_image
+from utils import save_image_crop
 
 # Open the default camera
 
-cam = cv2.VideoCapture(0    )
+cam = cv2.VideoCapture(0)
 
 # Detect face object haarcascade
 detect_face = cv2.CascadeClassifier('model/haarcascade_frontalface_default.xml')
@@ -35,10 +37,10 @@ model_path = 'model/model-26-0.7175.h5'
 CLASS_NAMES = ['angry', 'fear', 'happy', 'neutral', 'sad'] 
 
 emd = EmotionDetection(class_names=CLASS_NAMES)
-
 model = emd.load(model_path)
 
 # Check if Camera was found
+
 
 if not cam.isOpened():
     print("Error: Could not open video source.")

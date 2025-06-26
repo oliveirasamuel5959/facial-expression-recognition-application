@@ -8,7 +8,7 @@ from io import BytesIO
 
 image_path = "images/test.jpg"
 
-URL = "http://192.168.0.16:8080/v1/predictions"
+URL = "http://emovio.com.br/v1/predictions"
 headers = {'Content-type': 'application/json'}
 
 def image64_encode(filename):
@@ -51,6 +51,6 @@ def send_image_post(jsonfile):
     r = requests.post(url=URL, data=json.dumps(image_data), headers=headers)
     print(r.status_code)
 
-image64_encode(filename=image_path)
+## image64_encode(filename=image_path)
 image64_decode("scripts/embedded.json")
-send_image_post('scripts/embedded.json')
+## send_image_post('scripts/embedded.json')
