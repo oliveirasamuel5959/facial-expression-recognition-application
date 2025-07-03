@@ -9,7 +9,6 @@ from utils import save_image
 from utils import save_image_crop
 
 # Open the default camera
-
 cam = cv2.VideoCapture(0)
 
 # Detect face object haarcascade

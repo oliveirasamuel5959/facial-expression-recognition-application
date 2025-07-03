@@ -150,6 +150,14 @@ def gen_frames():
 async def video_feed():
     return StreamingResponse(gen_frames(), media_type="multipart/x-mixed-replace; boundary=frame")
 
+@app.get("/users")
+async def get_users(req: Request):
+    try:
+        return JSONResponse({'username': os.getenv('ADMIN_USER')})   
+    except Exception as e:
+        return JSONResponse({"message": "Failed"})
+
+
 @app.post("/login")
 async def login(req: Request):
     if req.method == 'POST':

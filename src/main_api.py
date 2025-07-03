@@ -66,7 +66,6 @@ while True:
     print(f"Elapsed Time request data: {end_time_get - start_get}s")
     
     if not get_data:
-        
         cv2.putText(frame, 'No face(s) found', (50, 50), fontFace=font, fontScale=1, color=(255, 0, 0), thickness=2, lineType=cv2.LINE_AA)
         
         # Write the frame to the output file

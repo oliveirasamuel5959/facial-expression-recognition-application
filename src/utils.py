@@ -5,8 +5,12 @@ import json
 import base64
 from io import BytesIO
 
-URL_POST = 'http://ai.emovio.com.br/api/v1/predictions'
-URL_GET = 'http://ai.emovio.com.br/api/v1/predictions/Samuel' 
+URL_POST = 'https://ai.emovio.com.br/api/v1/predictions'
+URL_GET = 'https://ai.emovio.com.br/api/v1/predictions/Samuel'
+
+URL_POST_LOCAL = 'http://192.168.0.16/v1/predictions'
+URL_GET_LOCAL = 'http://192.168.0.16/v1/predictions/Samuel'
+
 headers = {'content-type': 'application/json'}
 
 import numpy as np

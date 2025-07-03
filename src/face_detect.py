@@ -9,7 +9,7 @@ from utils import save_image_crop
 
 # Open the default camera
 try:
-    image_array = cv2.imread('images/sample/me_and_kids.jpeg')    
+    image_array = cv2.imread('images/sample/happy.jpg')    
 except FileNotFoundError:
     print("File not found")
     
