@@ -70,7 +70,7 @@ prev_frame_time = time.time()
 new_frame_time = 0
 
 def gen_frames():
-    cam = cv2.VideoCapture(video_path)
+    cam = cv2.VideoCapture(0)
     
     # Get the default frame width and height
     frame_width = int(cam.get(cv2.CAP_PROP_FRAME_WIDTH))
@@ -149,13 +149,6 @@ def gen_frames():
 @app.get("/video_feed")
 async def video_feed():
     return StreamingResponse(gen_frames(), media_type="multipart/x-mixed-replace; boundary=frame")
-
-@app.post("/video")
-async def video(req: Request):
-    if req.method() == 'POST':
-        video_password = os.getenv('VIDEO_PASSWORD')
-        data = await req.json()
-        
 
 @app.post("/login")
 async def login(req: Request):
