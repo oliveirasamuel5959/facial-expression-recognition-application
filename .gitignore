@@ -3,7 +3,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-*.mp4
+media/
 
 # C extensions
 *.so
