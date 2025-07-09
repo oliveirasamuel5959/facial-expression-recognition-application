@@ -10,7 +10,7 @@ import cv2
 import time
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(override=True)
 
 from utils.remote_conn import remote_conn
 from utils.local_conn import local_conn
@@ -50,6 +50,10 @@ remote = False
 
 video_path = 'media/people_street_2.mp4'
 
+print(os.getenv('CAM_IP'))
+
+rtsp = f"rtsp://{os.getenv('CAM_USER')}:{os.getenv('CAM_PASSWORD')}@{os.getenv('CAM_IP')}:{os.getenv('CAM_PORT')}/cam/realmonitor?channel=1&subtype=1"
+
 # Detect face object haarcascade
 detect_face = cv2.CascadeClassifier('../model/haarcascade_frontalface_default.xml')
 
@@ -69,8 +73,16 @@ model = emd.load(model_path)
 prev_frame_time = time.time() 
 new_frame_time = 0
 
+vid_fmt = cv2.VideoWriter_fourcc('M', 'J', 'P', 'G')
+
 def gen_frames():
-    cam = cv2.VideoCapture(0)
+    cam = cv2.VideoCapture(rtsp)
+    
+    cam.set(cv2.CAP_PROP_FRAME_WIDTH, 480)
+    cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 640)
+    
+    cam.set(cv2.CAP_PROP_FOURCC, vid_fmt)
+    
     
     # Get the default frame width and height
     frame_width = int(cam.get(cv2.CAP_PROP_FRAME_WIDTH))
@@ -79,7 +91,8 @@ def gen_frames():
     
     # Define the codec and create VideoWriter object
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-    out = cv2.VideoWriter('media/output_3.mp4', fourcc, 20.0, (frame_width, frame_height))
+    
+    out = cv2.VideoWriter('media/output_4.mp4', fourcc, 20.0, (frame_width, frame_height))
     
     # Start the time counter
     prev_frame_time = time.time() 
