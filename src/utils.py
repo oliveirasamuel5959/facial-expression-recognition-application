@@ -8,8 +8,8 @@ from io import BytesIO
 URL_POST = 'https://ai.emovio.com.br/api/v1/predictions'
 URL_GET = 'https://ai.emovio.com.br/api/v1/predictions/Samuel'
 
-URL_POST_LOCAL = 'http://192.168.0.16/v1/predictions'
-URL_GET_LOCAL = 'http://192.168.0.16/v1/predictions/Samuel'
+URL_POST_LOCAL = 'http://localhost:8080/v1/predictions'
+URL_GET_LOCAL = 'http://localhost:8080/v1/predictions/image'
 
 headers = {'content-type': 'application/json'}
 
@@ -104,9 +104,9 @@ def image64_encode(base_image, name):
         print("Error: ", e)
 
 def send_image_api(data_json):
-    response = requests.post(url=URL_POST, data=json.dumps(data_json), headers=headers)
+    response = requests.post(url=URL_POST_LOCAL, data=json.dumps(data_json), headers=headers)
     return response    
     
 def get_predictions():
-    response = requests.get(url=URL_GET, headers=headers)
+    response = requests.get(url=URL_GET_LOCAL, headers=headers)
     return response

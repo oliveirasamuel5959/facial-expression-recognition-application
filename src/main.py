@@ -9,10 +9,12 @@ from utils import save_image
 from utils import save_image_crop
 
 # Open the default camera
+
 cam = cv2.VideoCapture(0)
 
+
 # Detect face object haarcascade
-detect_face = cv2.CascadeClassifier('model/haarcascade_frontalface_default.xml')
+detect_face = cv2.CascadeClassifier('../model/haarcascade_frontalface_default.xml')
 
 # Get the default frame width and height
 frame_width = int(cam.get(cv2.CAP_PROP_FRAME_WIDTH))
@@ -30,7 +32,7 @@ x1, y1 = 300, 400
 font = cv2.FONT_HERSHEY_SIMPLEX
 
 # model path
-model_path = 'model/model-26-0.7175.h5'
+model_path = '../model/model-26-0.7175.h5'
 
 # Machine Learning Model class
 CLASS_NAMES = ['angry', 'fear', 'happy', 'neutral', 'sad'] 
@@ -39,8 +41,6 @@ emd = EmotionDetection(class_names=CLASS_NAMES)
 model = emd.load(model_path)
 
 # Check if Camera was found
-
-
 if not cam.isOpened():
     print("Error: Could not open video source.")
     exit()

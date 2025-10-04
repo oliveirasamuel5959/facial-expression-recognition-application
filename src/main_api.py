@@ -50,7 +50,7 @@ while True:
     post_response = send_image_api(data)
     end_time_post = time.time()
     
-    if post_response.status_code == 201:
+    if post_response.status_code == 200:
         print("Successfully created data")
     else:
         print(f"Error: {post_response.status_code} - {post_response.reason}")
