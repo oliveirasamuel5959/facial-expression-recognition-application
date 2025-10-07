@@ -32,7 +32,7 @@ x1, y1 = 300, 400
 font = cv2.FONT_HERSHEY_SIMPLEX
 
 # model path
-model_path = '../model/model-26-0.7175.h5'
+model_path = "../model/model-26-0.7175.h5"
 
 # Machine Learning Model class
 CLASS_NAMES = ['angry', 'fear', 'happy', 'neutral', 'sad'] 
