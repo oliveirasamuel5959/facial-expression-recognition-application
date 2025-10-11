@@ -80,7 +80,8 @@ while True:
         start_time = time.time()
         class_name, confidence = emd.make_predictions(image_array, model)
         
-        db.add_emotion(class_name)
+        if confidence >= 0.85:
+            db.add_emotion(class_name, confidence)  
         
         end_time = time.time()
         logging.info(f"Time taken for prediction: {round(end_time - start_time, 2)}s")
@@ -101,7 +102,7 @@ while True:
         )
         cv2.putText(
             frame,
-            f"{confidence}%",
+            f"{confidence}",
             (text_pos_x, text_pos_y + 30),
             fontFace=font,
             fontScale=1,

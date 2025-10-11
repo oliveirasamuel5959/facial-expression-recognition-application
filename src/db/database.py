@@ -18,7 +18,7 @@ class EmotionDatabase:
         )
         self.cursor = self.connection.cursor()
 
-    def add_emotion(self, emotion: str):
+    def add_emotion(self, emotion: str, acc: str) -> None:
         """Insert a new emotion record into the emotions table."""
         query = """
         INSERT INTO emotions (emotion, timestamp)
@@ -27,7 +27,7 @@ class EmotionDatabase:
         values = (emotion, datetime.now())
         self.cursor.execute(query, values)
         self.connection.commit()
-        logging.info(f"Emotion '{emotion}' inserted successfully.")
+        logging.info(f"Emotion '{emotion}' with {acc} inserted successfully.")
 
     def close(self):
         """Close cursor and database connection."""

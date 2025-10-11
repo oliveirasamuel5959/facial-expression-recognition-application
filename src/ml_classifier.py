@@ -30,7 +30,7 @@ class EmotionDetection:
         predicted_index = np.argmax(predictions)
         predicted_class = self.class_names[predicted_index]
         confidence = float(predictions[predicted_index])
-        confidence = round(confidence, 2) * 100
+        confidence = round(confidence, 2)
         logging.info("Return Prediction!")
         return [predicted_class, confidence]
     
