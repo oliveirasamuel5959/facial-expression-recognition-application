@@ -1,5 +1,6 @@
 import mysql.connector
 import os
+import logging
 from dotenv import load_dotenv
 from datetime import datetime
 from core.logging import setup_logging
@@ -26,7 +27,7 @@ class EmotionDatabase:
         values = (emotion, datetime.now())
         self.cursor.execute(query, values)
         self.connection.commit()
-        print(f"[✅] Emotion '{emotion}' inserted successfully.")
+        logging.info(f"Emotion '{emotion}' inserted successfully.")
 
     def close(self):
         """Close cursor and database connection."""

@@ -1,21 +1,26 @@
 import cv2
 import time
-import requests
+import logging
+import os
+
+from dotenv import load_dotenv
 
 from ml_classifier import EmotionDetection
 from utils import crop_face
 from utils import image_preprocessing
 from utils import save_image
-from utils import save_image_crop
 from db.database import EmotionDatabase
+from core.logging import setup_logging
 
+setup_logging()
 db = EmotionDatabase()
 
-db.add_emotion("happy")
-db.close()
+print(os.getenv('CAM_IP'))
+
+rtsp = f"rtsp://{os.getenv('CAM_USER')}:{os.getenv('CAM_PASSWORD')}@{os.getenv('CAM_IP')}:{os.getenv('CAM_PORT')}/cam/realmonitor?channel=1&subtype=1"
 
 # Open the default camera
-cam = cv2.VideoCapture(0)
+cam = cv2.VideoCapture(rtsp)
 
 # Detect face object haarcascade
 detect_face = cv2.CascadeClassifier("../model/haarcascade_frontalface_default.xml")
@@ -26,7 +31,7 @@ frame_height = int(cam.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
 # Define the codec and create VideoWriter object
 fourcc = cv2.VideoWriter_fourcc(*"mp4v")
-out = cv2.VideoWriter("output.mp4", fourcc, 20.0, (frame_width, frame_height))
+out = cv2.VideoWriter("output_2.mp4", fourcc, 20.0, (frame_width, frame_height))
 
 # Define rectangle positions
 x0, y0 = 200, 300
@@ -74,8 +79,11 @@ while True:
 
         start_time = time.time()
         class_name, confidence = emd.make_predictions(image_array, model)
+        
+        db.add_emotion(class_name)
+        
         end_time = time.time()
-        print(f"Time taken for prediction: {round(end_time - start_time, 2)}s")
+        logging.info(f"Time taken for prediction: {round(end_time - start_time, 2)}s")
 
         # return rectangle from face
         ret = cv2.rectangle(
@@ -112,6 +120,7 @@ while True:
 
     # Press 'q' to exit the loop
     if cv2.waitKey(1) == ord("q"):
+        db.close()
         break
 
 # Release the capture and writer objects
