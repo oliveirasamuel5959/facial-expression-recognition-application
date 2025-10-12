@@ -31,7 +31,7 @@ frame_height = int(cam.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
 # Define the codec and create VideoWriter object
 fourcc = cv2.VideoWriter_fourcc(*"mp4v")
-out = cv2.VideoWriter("output_2.mp4", fourcc, 20.0, (frame_width, frame_height))
+# out = cv2.VideoWriter("output_3.mp4", fourcc, 20.0, (frame_width, frame_height))
 
 # Define rectangle positions
 x0, y0 = 200, 300
@@ -114,7 +114,7 @@ while True:
         save_image(image=face_image_crop)
 
         # Write the frame to the output file
-        out.write(frame)
+        # out.write(frame)
 
     # Display the captured frame
     cv2.imshow("Camera", frame)
