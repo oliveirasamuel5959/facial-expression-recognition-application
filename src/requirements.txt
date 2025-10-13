@@ -11,8 +11,10 @@ cycler==0.12.1
 dotenv==0.9.9
 exceptiongroup==1.3.0
 fastapi==0.115.14
+filelock==3.13.1
 flatbuffers==25.2.10
 fonttools==4.58.2
+fsspec==2024.6.1
 gast==0.6.0
 google-pasta==0.2.0
 grpcio==1.72.1
@@ -21,6 +23,7 @@ h5py==3.14.0
 httpcore==1.0.9
 httpx==0.28.1
 idna==3.10
+Jinja2==3.1.4
 keras==3.10.0
 kiwisolver==1.4.8
 libclang==18.1.1
@@ -30,7 +33,10 @@ MarkupSafe==3.0.2
 matplotlib==3.10.3
 mdurl==0.1.2
 ml_dtypes==0.5.1
+mpmath==1.3.0
+mysql-connector-python==9.4.0
 namex==0.1.0
+networkx==3.3
 numpy==2.1.3
 opencv-python==4.11.0.86
 opt_einsum==3.4.0
@@ -50,11 +56,15 @@ rich==14.0.0
 six==1.17.0
 sniffio==1.3.1
 starlette==0.46.2
+sympy==1.13.3
 tensorboard==2.19.0
 tensorboard-data-server==0.7.2
 tensorflow==2.19.0
 tensorflow-io-gcs-filesystem==0.31.0
 termcolor==3.1.0
+torch==2.8.0+cpu
+torchaudio==2.8.0+cpu
+torchvision==0.23.0+cpu
 typing-inspection==0.4.1
 typing_extensions==4.14.0
 urllib3==2.4.0

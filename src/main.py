@@ -5,10 +5,10 @@ import os
 
 from dotenv import load_dotenv
 
-from ml_classifier import EmotionDetection
-from utils import crop_face
-from utils import image_preprocessing
-from utils import save_image
+from ai.keras.ml_classifier import EmotionDetection
+from ai.keras.utils import crop_face
+from ai.keras.utils import image_preprocessing
+from ai.keras.utils import save_image
 from db.database import EmotionDatabase
 from core.logging import setup_logging
 
@@ -20,7 +20,7 @@ print(os.getenv('CAM_IP'))
 rtsp = f"rtsp://{os.getenv('CAM_USER')}:{os.getenv('CAM_PASSWORD')}@{os.getenv('CAM_IP')}:{os.getenv('CAM_PORT')}/cam/realmonitor?channel=1&subtype=1"
 
 # Open the default camera
-cam = cv2.VideoCapture(rtsp)
+cam = cv2.VideoCapture(0)
 
 # Detect face object haarcascade
 detect_face = cv2.CascadeClassifier("../model/haarcascade_frontalface_default.xml")

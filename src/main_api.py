@@ -2,10 +2,10 @@ import cv2
 import time
 from PIL import Image
 
-from ml_classifier import EmotionDetection
-from utils import image64_encode
-from utils import send_image_api
-from utils import get_predictions
+from src.ai.ml_classifier import EmotionDetection
+from src.ai.utils import image64_encode
+from src.ai.utils import send_image_api
+from src.ai.utils import get_predictions
 
 # Open the default camera
 

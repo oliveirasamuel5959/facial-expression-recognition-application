@@ -1,11 +1,11 @@
 import cv2
 import time
 
-from ml_classifier import EmotionDetection
-from utils import crop_face
-from utils import image_preprocessing
-from utils import save_image
-from utils import save_image_crop
+from src.ai.ml_classifier import EmotionDetection
+from src.ai.utils import crop_face
+from src.ai.utils import image_preprocessing
+from src.ai.utils import save_image
+from src.ai.utils import save_image_crop
 
 # Open the default camera
 try:
