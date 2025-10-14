@@ -5,7 +5,8 @@ import os
 
 from dotenv import load_dotenv
 
-from ai.keras.ml_classifier import EmotionDetection
+# from ai.keras.ml_classifier import EmotionDetection
+from ai.torch.nn_eval import EmotionDetection
 from ai.keras.utils import crop_face
 from ai.keras.utils import image_preprocessing
 from ai.keras.utils import save_image
@@ -41,7 +42,8 @@ x1, y1 = 300, 400
 font = cv2.FONT_HERSHEY_SIMPLEX
 
 # model path
-model_path = "../model/model-26-0.7175.h5"
+# model_path = "../model/model-26-0.7175.h5"
+model_path = "../model/"
 
 # Machine Learning Model class
 CLASS_NAMES = ["angry", "fear", "happy", "neutral", "sad"]
@@ -75,10 +77,10 @@ while True:
         text_pos_y = y + h + 20
 
         face_image_crop = crop_face(frame=frame, pos=pos, dim=dim)
-        image_array = image_preprocessing(face_image_crop)
+        # image_array = image_preprocessing(face_image_crop)
 
         start_time = time.time()
-        class_name, confidence = emd.make_predictions(image_array, model)
+        class_name, confidence = emd.make_predictions(face_image_crop, model)
         
         if confidence >= 0.85:
             db.add_emotion(class_name, confidence)  
