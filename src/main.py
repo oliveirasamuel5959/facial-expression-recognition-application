@@ -107,7 +107,7 @@ while True:
         start_time = time.time()
         class_name, confidence = emd.make_predictions(face_image_crop, model)
 
-        if confidence >= 0.85:
+        if confidence > 2.15:
             db.add_emotion(class_name, confidence)
 
         end_time = time.time()
