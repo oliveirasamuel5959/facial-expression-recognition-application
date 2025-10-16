@@ -6,7 +6,7 @@ from datetime import datetime
 from core.logging import setup_logging
 
 setup_logging()
-load_dotenv()
+load_dotenv(override=True)
 
 class EmotionDatabase:
     def __init__(self):

@@ -20,7 +20,7 @@ print(os.getenv("CAM_IP"))
 rtsp = f"rtsp://{os.getenv('CAM_USER')}:{os.getenv('CAM_PASSWORD')}@{os.getenv('CAM_IP')}:{os.getenv('CAM_PORT')}/cam/realmonitor?channel=1&subtype=1"
 
 # Open the default camera
-cam = cv2.VideoCapture(rtsp)
+cam = cv2.VideoCapture(1)
 
 # Detect face object haarcascade
 detect_face = cv2.CascadeClassifier("../model/haarcascade_frontalface_default.xml")
@@ -54,7 +54,7 @@ model = emd.load(model_path)
 if not cam.isOpened():
     print("Error: Could not open video source.")
     exit()
-    
+
 # used to record the time when we processed last frame
 prev_frame_time = 0
 
@@ -69,15 +69,15 @@ while True:
     # detect face from frame
     rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     face = detect_face.detectMultiScale(rgb_frame, 1.2, 3)
-    
+
     new_frame_time = time.time()
-    
+
     fps = 1 / (new_frame_time - prev_frame_time)
     prev_frame_time = new_frame_time
-    
+
     fps = int(fps)
     fps = str(fps)
-    
+
     # putting the FPS count on the frame
     cv2.putText(
         frame,
