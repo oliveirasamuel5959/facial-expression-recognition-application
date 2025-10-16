@@ -20,7 +20,7 @@ print(os.getenv("CAM_IP"))
 rtsp = f"rtsp://{os.getenv('CAM_USER')}:{os.getenv('CAM_PASSWORD')}@{os.getenv('CAM_IP')}:{os.getenv('CAM_PORT')}/cam/realmonitor?channel=1&subtype=1"
 
 # Open the default camera
-cam = cv2.VideoCapture(1)
+cam = cv2.VideoCapture(rtsp)
 
 # Detect face object haarcascade
 detect_face = cv2.CascadeClassifier("../model/haarcascade_frontalface_default.xml")
