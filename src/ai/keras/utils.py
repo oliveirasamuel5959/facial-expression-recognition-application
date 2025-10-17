@@ -28,7 +28,7 @@ def crop_face(frame, pos, dim):
     pos = [x, y]
     dim = [w, h]
     '''
-    faces = frame[pos[1]:pos[1] + dim[1], pos[0]: pos[0] + dim[0]]
+    faces = frame[pos[1]:dim[1], pos[0]:dim[0]]
     return faces
 
 def image_preprocessing(face_image):
@@ -40,14 +40,14 @@ def image_preprocessing(face_image):
         return image
     except Exception as e:
         raise ValueError("Invalid image data") from e
-    
-    
+
+
 def save_image(image):
     resized = cv2.resize(image, (224, 224), interpolation=cv2.INTER_AREA)
     if resized.dtype != 'uint8':
         resized = (resized * 255).astype('uint8')  # Se for float, normaliza
     cv2.imwrite("resized_frame.png", resized)
-    
+
 def save_image_crop(image_array):
     logging.info(f"Start face detection. Image shape is {image_array.shape}.")
     gray_image = cv2.cvtColor(image_array, cv2.COLOR_BGR2GRAY)
@@ -65,28 +65,28 @@ def save_image_crop(image_array):
         for (x, y, w, h) in faces:
             pos = (int(x), int(y))
             dim = (int(w), int(h))
-            
+
             cv2.rectangle(image_array, (x, y), (x + w, y + h), (0, 255, 0), 3)
             face_image = crop_face(image_array, pos=pos, dim=dim)
             cv2.imwrite(f"images/result/face_image_crop_{i}.png", face_image)
             i += 1
 
         cv2.imwrite("images/result/face_image.png", image_array)
-        
-        logging.info(f"Completed face detection. Face shape {faces} and found {num_faces} face(s).")    
+
+        logging.info(f"Completed face detection. Face shape {faces} and found {num_faces} face(s).")
         return face_image, num_faces, faces
-    
+
     return 0, 0, 0
 
 def image64_encode(base_image, name):
     try:
         buffered = BytesIO()
         base_image.save(buffered, format='JPEG')
-        
+
         image_bytes = buffered.getvalue()
         base64_bytes = base64.b64encode(image_bytes)
         base64_encoded = base64_bytes.decode()
-        
+
         data = {
             'image':
                 {
@@ -99,14 +99,14 @@ def image64_encode(base_image, name):
 
         print(data['image']['content'][0:20])
         return data
-        
+
     except Exception as e:
         print("Error: ", e)
 
 def send_image_api(data_json):
     response = requests.post(url=URL_POST_LOCAL, data=json.dumps(data_json), headers=headers)
-    return response    
-    
+    return response
+
 def get_predictions():
     response = requests.get(url=URL_GET_LOCAL, headers=headers)
     return response

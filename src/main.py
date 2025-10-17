@@ -4,6 +4,7 @@ import logging
 import os
 
 from dotenv import load_dotenv
+from ultralytics import YOLO
 
 from ai.torch.nn_eval import EmotionDetection
 from ai.keras.utils import crop_face
@@ -13,6 +14,8 @@ from db.database import EmotionDatabase
 from core.logging import setup_logging
 
 setup_logging()
+load_dotenv()
+
 db = EmotionDatabase()
 
 print(os.getenv("CAM_IP"))
@@ -49,6 +52,7 @@ CLASS_NAMES = ["angry", "fear", "happy", "neutral", "sad"]
 
 emd = EmotionDetection(class_names=CLASS_NAMES)
 model = emd.load(model_path)
+yolo_model = YOLO("../model/yolo/yolov8n-face.pt")
 
 # Check if Camera was found
 if not cam.isOpened():
@@ -67,8 +71,11 @@ while True:
     ret, frame = cam.read()
 
     # detect face from frame
-    rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    face = detect_face.detectMultiScale(rgb_frame, 1.2, 3)
+    # rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    # face = detect_face.detectMultiScale(rgb_frame, 1.2, 3)
+
+    results = yolo_model.predict(source=frame)
+    boxes = results[0].boxes
 
     new_frame_time = time.time()
 
@@ -92,14 +99,22 @@ while True:
 
     # iterate over position and dimensions of the rectangle
     # from cascade classifier
-    for x, y, w, h in face:
+    for box in boxes:
+
+        top_left_x = int(box.xyxy.tolist()[0][0])
+        top_left_y = int(box.xyxy.tolist()[0][1])
+        bottom_right_x = int(box.xyxy.tolist()[0][2])
+        bottom_right_y = int(box.xyxy.tolist()[0][3])
+
         # get frame position and dimensions
-        pos = [x, y]
-        dim = [w, h]
+        pos = [top_left_x, top_left_y]
+        dim = [bottom_right_x, bottom_right_y]
+
+        print("Dimension: ", pos, dim)
 
         # define text position coordinates
-        text_pos_x = x
-        text_pos_y = y + h + 20
+        text_pos_x = top_left_x
+        text_pos_y = top_left_y + bottom_right_y + 20
 
         face_image_crop = crop_face(frame=frame, pos=pos, dim=dim)
         # image_array = image_preprocessing(face_image_crop)
@@ -107,7 +122,7 @@ while True:
         start_time = time.time()
         class_name, confidence = emd.make_predictions(face_image_crop, model)
 
-        if confidence > 2.15:
+        if confidence > 1.00:
             db.add_emotion(class_name, confidence)
 
         end_time = time.time()
@@ -115,7 +130,7 @@ while True:
 
         # return rectangle from face
         ret = cv2.rectangle(
-            frame, (x, y), (x + w, y + h), color=(0, 255, 0), thickness=2
+            frame, (top_left_x, top_left_y), (bottom_right_x, bottom_right_y), color=(0, 255, 0), thickness=2
         )
 
         cv2.putText(
