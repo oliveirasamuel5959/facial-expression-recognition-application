@@ -56,6 +56,11 @@ packaging==25.0
 pandas==2.3.3
 parso==0.8.5
 pillow==11.2.1
+<<<<<<< HEAD
+polars==1.34.0
+polars-runtime-32==1.34.0
+=======
+>>>>>>> 839a79b8639cdd48a5e40035ac866b6248dad65b
 prompt_toolkit==3.0.52
 protobuf==5.29.5
 psutil==7.1.0
@@ -85,15 +90,26 @@ tensorflow==2.19.0
 tensorflow-io-gcs-filesystem==0.31.0
 termcolor==3.1.0
 thop==0.1.1.post2209072238
+<<<<<<< HEAD
+torch==2.8.0+cpu
+torchaudio==2.8.0+cpu
+torchvision==0.23.0+cpu
+=======
 torch==2.9.0+cpu
 torchaudio==2.9.0+cpu
 torchvision==0.24.0+cpu
+>>>>>>> 839a79b8639cdd48a5e40035ac866b6248dad65b
 tqdm==4.67.1
 traitlets==5.14.3
 typing-inspection==0.4.1
 typing_extensions==4.14.0
 tzdata==2025.2
+<<<<<<< HEAD
+ultralytics==8.3.216
+ultralytics-thop==2.0.17
+=======
 ultralytics==8.0.0
+>>>>>>> 839a79b8639cdd48a5e40035ac866b6248dad65b
 urllib3==2.4.0
 uvicorn==0.34.3
 wcwidth==0.2.14
