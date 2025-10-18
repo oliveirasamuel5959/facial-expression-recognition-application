@@ -56,7 +56,7 @@ class EmotionDetection:
         transformed_image = self.data_transform(pil_image)
         return transformed_image
 
-    def make_predictions(self, image_array, model):
+    def make_predictions(self, image_array):
         """
         model load and stored in model variable
         image must be in the format: (1, 224, 224, 3)
@@ -70,7 +70,7 @@ class EmotionDetection:
         input_tensor = transformed_image.unsqueeze(0)
         input_tensor = input_tensor.to(self.device)
 
-        model.eval()
+        self.model.eval()
         with torch.no_grad():
             output = self.model(input_tensor)
             predicted_index = torch.argmax(output, dim=1).item()

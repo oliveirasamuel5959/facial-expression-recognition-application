@@ -112,20 +112,16 @@ while True:
 
         print("Dimension: ", pos, dim)
 
-        # define text position coordinates
-        text_pos_x = top_left_x
-        text_pos_y = top_left_y + bottom_right_y + 20
-
         face_image_crop = crop_face(frame=frame, pos=pos, dim=dim)
         # image_array = image_preprocessing(face_image_crop)
 
         start_time = time.time()
-        class_name, confidence = emd.make_predictions(face_image_crop, model)
+        class_name, confidence = emd.make_predictions(face_image_crop)
+        end_time = time.time()
 
-        if confidence > 1.00:
+        if confidence > 2.00:
             db.add_emotion(class_name, confidence)
 
-        end_time = time.time()
         logging.info(f"Time taken for prediction: {round(end_time - start_time, 2)}s")
 
         # return rectangle from face
@@ -136,7 +132,7 @@ while True:
         cv2.putText(
             frame,
             f"{class_name}",
-            (text_pos_x, text_pos_y),
+            (bottom_right_x, bottom_right_y),
             fontFace=font,
             fontScale=1,
             color=(0, 255, 0),
@@ -147,7 +143,7 @@ while True:
         cv2.putText(
             frame,
             f"{confidence}",
-            (text_pos_x, text_pos_y + 30),
+            (bottom_right_x, bottom_right_y + 30),
             fontFace=font,
             fontScale=1,
             color=(0, 255, 0),
