@@ -68,14 +68,18 @@ class EmotionDetection:
         pil_image = Image.fromarray(image_array)
         transformed_image = self.data_transform(pil_image)
         input_tensor = transformed_image.unsqueeze(0)
-        input_tensor = input_tensor.to(self.device)
 
         self.model.eval()
         with torch.no_grad():
+            input_tensor = input_tensor.to(self.device)
             output = self.model(input_tensor)
-            predicted_index = torch.argmax(output, dim=1).item()
-            # convert Torch.tensor type to a number Integer
-            confidence = round(output[0][predicted_index].item(), 2)
-            logging.info(f"Output tensor: {output} Confidence: {confidence}")
+            probabilities = F.softmax(output, dim=1)  # converte logits em probabilidades
+
+            predicted_class = torch.argmax(probabilities, dim=1).item()
+            predicted_prob = probabilities[0, predicted_class].item()
+            # predicted_index = torch.argmax(output, dim=1).item()
+            # # convert Torch.tensor type to a number Integer
+            # confidence = round(output[0][predicted_index].item(), 2)
+            logging.info(f"Output tensor: {output} Confidence: {predicted_prob}")
         logging.info("Return Prediction!")
-        return [self.class_names[predicted_index], confidence]
+        return [self.class_names[predicted_class], round(predicted_prob, 2)]

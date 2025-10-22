@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 from ultralytics import YOLO
 
 from ai.torch.nn_eval import EmotionDetection
+# from ai.keras.ml_classifier import EmotionDetection
 from ai.keras.utils import crop_face
 from ai.keras.utils import image_preprocessing
 from ai.keras.utils import save_image
@@ -45,7 +46,7 @@ font = cv2.FONT_HERSHEY_SIMPLEX
 
 # model path
 # model_path = "../model/model-26-0.7175.h5"
-model_path = "../model/"
+model_path = "../model"
 
 # Machine Learning Model class
 CLASS_NAMES = ["angry", "fear", "happy", "neutral", "sad"]
@@ -116,10 +117,11 @@ while True:
         # image_array = image_preprocessing(face_image_crop)
 
         start_time = time.time()
+        # class_name, confidence = emd.make_predictions(image_array, model=model)
         class_name, confidence = emd.make_predictions(face_image_crop)
         end_time = time.time()
 
-        if confidence > 2.00:
+        if confidence > 0.75:
             db.add_emotion(class_name, confidence)
 
         logging.info(f"Time taken for prediction: {round(end_time - start_time, 2)}s")
@@ -132,9 +134,9 @@ while True:
         cv2.putText(
             frame,
             f"{class_name}",
-            (bottom_right_x, bottom_right_y),
+            (top_left_x, top_left_y + 60),
             fontFace=font,
-            fontScale=1,
+            fontScale=0.65,
             color=(0, 255, 0),
             thickness=2,
             lineType=cv2.LINE_AA,
@@ -143,9 +145,9 @@ while True:
         cv2.putText(
             frame,
             f"{confidence}",
-            (bottom_right_x, bottom_right_y + 30),
+            (top_left_x, top_left_y + 80),
             fontFace=font,
-            fontScale=1,
+            fontScale=0.65,
             color=(0, 255, 0),
             thickness=2,
             lineType=cv2.LINE_AA,

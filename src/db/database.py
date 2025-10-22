@@ -37,9 +37,7 @@ class EmotionDatabase:
             self.connection.close()
         print("[🔒] Database connection closed.")
 
-
-# Example usage
-if __name__ == "__main__":
-    db = EmotionDatabase()
-    db.add_emotion("happy")
-    db.close()
+# if __name__ == "__main__":
+#     db = EmotionDatabase()
+#     db.add_emotion("happy")
+#     db.close()
