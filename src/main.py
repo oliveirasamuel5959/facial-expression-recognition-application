@@ -1,18 +1,16 @@
-import cv2
-import time
 import logging
 import os
+import time
 
+import cv2
 from dotenv import load_dotenv
 from ultralytics import YOLO
 
-from ai.torch.nn_eval import EmotionDetection
 # from ai.keras.ml_classifier import EmotionDetection
-from ai.keras.utils import crop_face
-from ai.keras.utils import image_preprocessing
-from ai.keras.utils import save_image
-from db.database import EmotionDatabase
+from ai.keras.utils import crop_face, image_preprocessing, save_image
+from ai.torch.nn_eval import EmotionDetection
 from core.logging import setup_logging
+from db.database import EmotionDatabase
 
 setup_logging()
 load_dotenv()
