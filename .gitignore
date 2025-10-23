@@ -5,6 +5,7 @@ __pycache__/
 
 media/
 model/yolo
+images/
 *.mp4
 
 # C extensions

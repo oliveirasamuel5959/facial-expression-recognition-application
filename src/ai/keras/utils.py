@@ -23,12 +23,13 @@ import logging
 
 logging.basicConfig(filename='face.log', filemode='w', level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
-def crop_face(frame, pos, dim):
+def crop_face(frame, x, y):
     '''
     pos = [x, y]
     dim = [w, h]
     '''
-    faces = frame[pos[1]:dim[1], pos[0]:dim[0]]
+    faces = frame[x[1]:y[1], x[0]:y[0]]
+    # faces = frame[y[0]:y[0] + y[1], x[1]:x[1] + x[1]]
     return faces
 
 def image_preprocessing(face_image):

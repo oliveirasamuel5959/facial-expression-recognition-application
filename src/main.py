@@ -8,6 +8,7 @@ from ultralytics import YOLO
 
 # from ai.keras.ml_classifier import EmotionDetection
 from ai.keras.utils import crop_face, image_preprocessing, save_image
+from utils.simple_facerec import SimpleFaceRec
 from ai.torch.nn_eval import EmotionDetection
 from core.logging import setup_logging
 from db.database import EmotionDatabase
@@ -22,10 +23,7 @@ print(os.getenv("CAM_IP"))
 rtsp = f"rtsp://{os.getenv('CAM_USER')}:{os.getenv('CAM_PASSWORD')}@{os.getenv('CAM_IP')}:{os.getenv('CAM_PORT')}/cam/realmonitor?channel=1&subtype=1"
 
 # Open the default camera
-cam = cv2.VideoCapture(rtsp)
-
-# Detect face object haarcascade
-detect_face = cv2.CascadeClassifier("../model/haarcascade_frontalface_default.xml")
+cam = cv2.VideoCapture(0)
 
 # Get the default frame width and height
 frame_width = int(cam.get(cv2.CAP_PROP_FRAME_WIDTH))
@@ -51,6 +49,7 @@ CLASS_NAMES = ["angry", "fear", "happy", "neutral", "sad"]
 
 emd = EmotionDetection(class_names=CLASS_NAMES)
 model = emd.load(model_path)
+sfr = SimpleFaceRec()
 yolo_model = YOLO("../model/yolo/yolov8n-face.pt")
 
 # Check if Camera was found
@@ -68,13 +67,6 @@ while True:
     # get camera read boolean
     # and each camera frame
     ret, frame = cam.read()
-
-    # detect face from frame
-    # rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    # face = detect_face.detectMultiScale(rgb_frame, 1.2, 3)
-
-    results = yolo_model.predict(source=frame)
-    boxes = results[0].boxes
 
     new_frame_time = time.time()
 
@@ -96,8 +88,9 @@ while True:
         lineType=cv2.LINE_AA,
     )
 
-    # iterate over position and dimensions of the rectangle
-    # from cascade classifier
+    boxes = sfr.face_from_yolo(frame)
+    # boxes = sfr.face_from_haarcascade(frame)
+
     for box in boxes:
 
         top_left_x = int(box.xyxy.tolist()[0][0])
@@ -105,13 +98,9 @@ while True:
         bottom_right_x = int(box.xyxy.tolist()[0][2])
         bottom_right_y = int(box.xyxy.tolist()[0][3])
 
-        # get frame position and dimensions
-        pos = [top_left_x, top_left_y]
-        dim = [bottom_right_x, bottom_right_y]
+        print("Faces: ", box.xyxy.tolist())
 
-        print("Dimension: ", pos, dim)
-
-        face_image_crop = crop_face(frame=frame, pos=pos, dim=dim)
+        face_image_crop = crop_face(frame=frame, x=(top_left_x, top_left_y), y=(bottom_right_x, bottom_right_y))
         # image_array = image_preprocessing(face_image_crop)
 
         start_time = time.time()

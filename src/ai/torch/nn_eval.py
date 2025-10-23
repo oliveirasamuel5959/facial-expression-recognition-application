@@ -13,8 +13,20 @@ logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
 )
 
+data_transform = transforms.Compose(
+        [
+            # It is necessary to resize the image to match the network's input size.
+            transforms.Resize(230),
+            transforms.CenterCrop(224),
+            transforms.ToTensor(),
+            # Mean and standard deviation of ImageNet
+            # These are required as we will use a model pre-trained on ImageNet.
+            transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]),
+        ]
+    )
 
 class EmotionDetection:
+
     def __init__(self, class_names):
         self.ARCH_NAME = "resnet18"
         self.class_names = class_names
@@ -23,18 +35,6 @@ class EmotionDetection:
         self.model = models.resnet18(pretrained=True).to(self.device)
         num_ftrs = self.model.fc.in_features
         self.model.fc = nn.Linear(num_ftrs, 5).to(self.device)
-
-        self.data_transform = transforms.Compose(
-            [
-                # It is necessary to resize the image to match the network's input size.
-                transforms.Resize(230),
-                transforms.CenterCrop(224),
-                transforms.ToTensor(),
-                # Mean and standard deviation of ImageNet
-                # These are required as we will use a model pre-trained on ImageNet.
-                transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]),
-            ]
-        )
 
     def load(self, path):
         """
@@ -52,10 +52,6 @@ class EmotionDetection:
 
         return self.model
 
-    def transform(self, pil_image):
-        transformed_image = self.data_transform(pil_image)
-        return transformed_image
-
     def make_predictions(self, image_array):
         """
         model load and stored in model variable
@@ -66,7 +62,7 @@ class EmotionDetection:
         """
         logging.info("Start Prediction...")
         pil_image = Image.fromarray(image_array)
-        transformed_image = self.data_transform(pil_image)
+        transformed_image = data_transform(pil_image)
         input_tensor = transformed_image.unsqueeze(0)
 
         self.model.eval()
