@@ -121,7 +121,7 @@ while True:
         cv2.putText(
             frame,
             f"{class_name}",
-            (top_left_x, top_left_y + 60),
+            (top_left_x, bottom_right_y + 20),
             fontFace=font,
             fontScale=0.65,
             color=(0, 255, 0),
@@ -132,7 +132,7 @@ while True:
         cv2.putText(
             frame,
             f"{confidence}",
-            (top_left_x, top_left_y + 80),
+            (top_left_x, bottom_right_y + 40),
             fontFace=font,
             fontScale=0.65,
             color=(0, 255, 0),
