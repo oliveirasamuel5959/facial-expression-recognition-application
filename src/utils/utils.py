@@ -21,15 +21,11 @@ import matplotlib.pyplot as plt
 import logging
 
 
-logging.basicConfig(filename='face.log', filemode='w', level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(filename='../face.log', filemode='w', level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def crop_face(frame, x, y):
-    '''
-    pos = [x, y]
-    dim = [w, h]
-    '''
-    faces = frame[x[1]:y[1], x[0]:y[0]]
-    # faces = frame[y[0]:y[0] + y[1], x[1]:x[1] + x[1]]
+    # faces = frame[x[1]:y[1], x[0]:y[0]] # for yolo
+    faces = frame[x[1]:y[1], x[0]:y[0]] # for cascade
     return faces
 
 def image_preprocessing(face_image):
