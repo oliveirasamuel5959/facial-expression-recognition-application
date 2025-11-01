@@ -143,17 +143,6 @@ while True:
             lineType=cv2.LINE_AA,
         )
 
-        # cv2.putText(
-        #     frame,
-        #     f"{confidence}",
-        #     (x, h + 40),
-        #     fontFace=font,
-        #     fontScale=0.65,
-        #     color=(0, 255, 0),
-        #     thickness=2,
-        #     lineType=cv2.LINE_AA,
-        # )
-
         save_image(image=face_image_crop)
 
         # Write the frame to the output file
