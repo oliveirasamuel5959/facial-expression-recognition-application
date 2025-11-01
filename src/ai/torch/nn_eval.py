@@ -78,4 +78,4 @@ class EmotionDetection:
             # confidence = round(output[0][predicted_index].item(), 2)
             logging.info(f"Output tensor: {output} Confidence: {predicted_prob}")
         logging.info("Return Prediction!")
-        return [self.class_names[predicted_class], round(predicted_prob, 2)]
+        return [predicted_class, round(predicted_prob, 2)]

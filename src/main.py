@@ -23,7 +23,7 @@ print(os.getenv("CAM_IP"))
 rtsp = f"rtsp://{os.getenv('CAM_USER')}:{os.getenv('CAM_PASSWORD')}@{os.getenv('CAM_IP')}:{os.getenv('CAM_PORT')}/cam/realmonitor?channel=1&subtype=1"
 
 # Open the default camera
-cam = cv2.VideoCapture(rtsp)
+cam = cv2.VideoCapture(0)
 
 # Get the default frame width and height
 frame_width = int(cam.get(cv2.CAP_PROP_FRAME_WIDTH))
@@ -42,6 +42,14 @@ font = cv2.FONT_HERSHEY_SIMPLEX
 
 # Machine Learning Model class
 CLASS_NAMES = ["angry", "fear", "happy", "neutral", "sad"]
+
+emotions = {
+    0: ['Angry', (0,0,255), (255,255,255)],
+    1: ['Fear', (255,255,153), (0,51,51)],
+    2: ['Happy', (0,255,0), (255,255,255)],
+    3: ['Neutral', (160,160,160), (255,255,255)],
+    4: ['Sad', (255,0,0), (255,255,255)],
+}
 
 emd = EmotionDetection(class_names=CLASS_NAMES)
 model = emd.load("model/")
@@ -103,40 +111,48 @@ while True:
 
         start_time = time.time()
         # class_name, confidence = emd.make_predictions(image_array, model=model)
-        class_name, confidence = emd.make_predictions(face_image_crop)
+        pred, confidence = emd.make_predictions(face_image_crop)
         end_time = time.time()
 
+        top, right, bottom, left = x*1, y*1, w*1, h*1
+
         if confidence > 0.75:
-            db.add_emotion(class_name, confidence)
+            db.add_emotion(emotions[pred][0], confidence)
 
         logging.info(f"Time taken for prediction: {round(end_time - start_time, 2)}s")
 
         # return rectangle from face
-        ret = cv2.rectangle(
-            frame, (x, y), (x + w, y + h), color=(0, 255, 0), thickness=2
+        cv2.rectangle(
+            frame, (x, y), (x + w, y + h), color=emotions[pred][1], thickness=2
+            # frame, (left, top), (right, bottom), color=(0, 255, 0), thickness=2
+        )
+
+        cv2.rectangle(
+            frame, (x, y-20), (x + w, y), color=emotions[pred][1], thickness=-1
+            # frame, (left, top-50), (right, top), color=(0, 255, 0), thickness=-1
         )
 
         cv2.putText(
             frame,
-            f"{class_name}",
-            (x, h + 20),
+            f"{emotions[pred][0]}",
+            (x, y-5),
             fontFace=font,
             fontScale=0.65,
-            color=(0, 255, 0),
+            color=(emotions[pred][2]),
             thickness=2,
             lineType=cv2.LINE_AA,
         )
 
-        cv2.putText(
-            frame,
-            f"{confidence}",
-            (x, h + 40),
-            fontFace=font,
-            fontScale=0.65,
-            color=(0, 255, 0),
-            thickness=2,
-            lineType=cv2.LINE_AA,
-        )
+        # cv2.putText(
+        #     frame,
+        #     f"{confidence}",
+        #     (x, h + 40),
+        #     fontFace=font,
+        #     fontScale=0.65,
+        #     color=(0, 255, 0),
+        #     thickness=2,
+        #     lineType=cv2.LINE_AA,
+        # )
 
         save_image(image=face_image_crop)
 
