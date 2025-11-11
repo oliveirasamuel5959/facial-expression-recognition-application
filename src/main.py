@@ -23,7 +23,7 @@ print(os.getenv("CAM_IP"))
 rtsp = f"rtsp://{os.getenv('CAM_USER')}:{os.getenv('CAM_PASSWORD')}@{os.getenv('CAM_IP')}:{os.getenv('CAM_PORT')}/cam/realmonitor?channel=1&subtype=1"
 
 # Open the default camera
-cam = cv2.VideoCapture(0)
+cam = cv2.VideoCapture(rtsp)
 
 # Get the default frame width and height
 frame_width = int(cam.get(cv2.CAP_PROP_FRAME_WIDTH))
@@ -92,18 +92,18 @@ while True:
         lineType=cv2.LINE_AA,
     )
 
-    # boxes = sfr.face_from_yolo(frame)
-    boxes = sfr.face_from_haarcascade(frame)
+    boxes = sfr.face_from_yolo(frame)
+    # boxes = sfr.face_from_haarcascade(frame)
 
     for box in boxes:
-        x, y, w, h = box[0], box[1], box[2], box[3]
+        # x, y, w, h = box[0], box[1], box[2], box[3]
 
-        # x = int(box.xyxy.tolist()[0][0])
-        # y = int(box.xyxy.tolist()[0][1])
-        # w = int(box.xyxy.tolist()[0][2])
-        # h = int(box.xyxy.tolist()[0][3])
+        x = int(box.xyxy.tolist()[0][0])
+        y = int(box.xyxy.tolist()[0][1])
+        w = int(box.xyxy.tolist()[0][2])
+        h = int(box.xyxy.tolist()[0][3])
 
-        print("Faces: ", (x, y, w, h))
+        # print("Faces: ", (x, y, w, h))
 
         face_image_crop = crop_face(frame=frame, x=(x, y), y=(x + w, y + h))
         # face_image_crop = crop_face(frame, (x, x + w), (y, y + h))
@@ -114,8 +114,6 @@ while True:
         pred, confidence = emd.make_predictions(face_image_crop)
         end_time = time.time()
 
-        top, right, bottom, left = x*1, y*1, w*1, h*1
-
         if confidence > 0.75:
             db.add_emotion(emotions[pred][0], confidence)
 
@@ -123,13 +121,13 @@ while True:
 
         # return rectangle from face
         cv2.rectangle(
-            frame, (x, y), (x + w, y + h), color=emotions[pred][1], thickness=2
-            # frame, (left, top), (right, bottom), color=(0, 255, 0), thickness=2
+            # frame, (x, y), (x + w, y + h), color=emotions[pred][1], thickness=2
+            frame, (x, y), (w, h), color=emotions[pred][1], thickness=2
         )
 
         cv2.rectangle(
-            frame, (x, y-20), (x + w, y), color=emotions[pred][1], thickness=-1
-            # frame, (left, top-50), (right, top), color=(0, 255, 0), thickness=-1
+            # frame, (x, y-20), (x, y), color=emotions[pred][1], thickness=-1
+            frame, (x, y-20), (w, y), color=emotions[pred][1], thickness=-1
         )
 
         cv2.putText(
