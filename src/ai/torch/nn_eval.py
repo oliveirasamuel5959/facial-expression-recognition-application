@@ -71,11 +71,11 @@ class EmotionDetection:
             output = self.model(input_tensor)
             probabilities = F.softmax(output, dim=1)  # converte logits em probabilidades
 
-            predicted_class = torch.argmax(probabilities, dim=1).item()
-            predicted_prob = probabilities[0, predicted_class].item()
+            predicted_index = torch.argmax(output, dim=1).item()
+            predicted_prob = probabilities[0, predicted_index].item() # type: ignore
             # predicted_index = torch.argmax(output, dim=1).item()
             # # convert Torch.tensor type to a number Integer
             # confidence = round(output[0][predicted_index].item(), 2)
-            logging.info(f"Output tensor: {output} Confidence: {predicted_prob}")
+            logging.info(f"Output tensor: {output}")
         logging.info("Return Prediction!")
-        return [predicted_class, round(predicted_prob, 2)]
+        return [int(predicted_index), predicted_prob]

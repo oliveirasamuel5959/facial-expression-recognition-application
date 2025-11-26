@@ -23,7 +23,7 @@ print(os.getenv("CAM_IP"))
 rtsp = f"rtsp://{os.getenv('CAM_USER')}:{os.getenv('CAM_PASSWORD')}@{os.getenv('CAM_IP')}:{os.getenv('CAM_PORT')}/cam/realmonitor?channel=1&subtype=1"
 
 # Open the default camera
-cam = cv2.VideoCapture(rtsp)
+cam = cv2.VideoCapture(0)
 
 # Get the default frame width and height
 frame_width = int(cam.get(cv2.CAP_PROP_FRAME_WIDTH))
@@ -114,7 +114,7 @@ while True:
         pred, confidence = emd.make_predictions(face_image_crop)
         end_time = time.time()
 
-        if confidence > 0.75:
+        if confidence > 2.65:
             db.add_emotion(emotions[pred][0], confidence)
 
         logging.info(f"Time taken for prediction: {round(end_time - start_time, 2)}s")

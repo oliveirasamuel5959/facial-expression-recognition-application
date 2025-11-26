@@ -1,7 +1,7 @@
 import cv2
 import os
 import logging
-import face_recognition
+# import face_recognition
 from ultralytics import YOLO
 
 # from src.core.logging import setup_logging
@@ -22,8 +22,9 @@ class SimpleFaceRec:
         pass
 
     def face_from_facerec(self, frame):
-        face_locations = face_recognition.face_locations(frame)
-        return face_locations
+        # face_locations = face_recognition.face_locations(frame)
+        # return face_locations
+        pass
 
     def face_from_yolo(self, frame):
         results = yolo_model.predict(source=frame)
